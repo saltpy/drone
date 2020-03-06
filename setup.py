@@ -37,6 +37,21 @@ project_slug = NAME.lower().replace("-", "_").replace(" ", "_")
 with open(os.path.join(here, project_slug, '__version__.py')) as f:
     exec(f.read(), about)
 
+class GetVersion(Command):
+    description = 'Show the version number of the package.'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        with open(".tags", "w+") as opf:
+            opf.write(about["__version__"])
+        sys.exit()
+
 setup(
     name=NAME,
     version=about['__version__'],
@@ -53,8 +68,6 @@ setup(
     include_package_data=True,
     license='MIT',
     classifiers=[
-        # Trove classifiers
-        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
@@ -63,5 +76,6 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
     cmdclass={
+        "version": GetVersion
     },
 )
