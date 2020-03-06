@@ -1,0 +1,12 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: build
+  image: python:3.7-alpine
+  commands:
+      - pip install --upgrade pip
+      - pip install --upgrade wheel
+      - python setup.py sdist bdist_wheel
