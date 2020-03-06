@@ -19,5 +19,13 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-image_pull_secrets:
-    - dockerconfigjson
+- name: acceptance
+  image: python:3.7-alpine
+  commands:
+  - pip install -r requirements.dev.txt
+  - behave
+  services:
+  - name: selenium
+    image: selenium/standalone-chrome:3.141.59
+  - name: target
+    image: saltpy/drone

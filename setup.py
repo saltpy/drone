@@ -18,8 +18,8 @@ EMAIL = 'saltpy@gmail.com'
 AUTHOR = 'James Salt'
 REQUIRES_PYTHON = '>=3.7.0'
 
-REQUIRED = [
-]
+with open("./requirements.txt", "r") as inf:
+    REQUIRED = inf.read().split("\n")
 
 EXTRAS = {
 }
