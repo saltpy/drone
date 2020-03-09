@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+test -z $1 && target=.drone.yml || target=$1
+drone exec --registry=https://saltpy:dc505add-e8c6-443c-9c26-befa218612c3@index.docker.io/v1/ --secret-file=secrets.txt $target

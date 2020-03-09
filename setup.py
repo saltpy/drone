@@ -48,8 +48,13 @@ class GetVersion(Command):
         pass
 
     def run(self):
+        tags = f"{about['__version__']},latest"
+        try:
+            tags += f",{os.environ['DRONE_COMMIT_SHA']}"
+        except KeyError:
+            pass
         with open(".tags", "w+") as opf:
-            opf.write(about["__version__"])
+            opf.write(tags)
         sys.exit()
 
 setup(

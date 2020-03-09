@@ -7,9 +7,8 @@ steps:
 - name: build
   image: python:3.7-alpine
   commands:
-  - pip install --upgrade pip
-  - pip install --upgrade wheel
-  - python setup.py sdist bdist_wheel
+  - pip install --upgrade pip wheel
+  - python setup.py bdist_wheel
   - python setup.py version
 - name: dockerise
   image: plugins/docker
@@ -19,13 +18,15 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
+- name: selenium
+  image: selenium/standalone-chrome:3.141.59
+  detach: true
+- name: target
+  image: saltpy/drone:${DRONE_COMMIT_SHA} 
+  detach: true
+  pull: never
 - name: acceptance
   image: python:3.7-alpine
   commands:
   - pip install -r requirements.dev.txt
   - behave
-  services:
-  - name: selenium
-    image: selenium/standalone-chrome:3.141.59
-  - name: target
-    image: saltpy/drone
